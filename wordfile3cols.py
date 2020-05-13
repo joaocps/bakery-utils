@@ -58,7 +58,7 @@ class Word3Cols:
                                            set_underline=True, font_size=12)
 
                     if len(l_months) >= 2:
-                        self.add_paragraph(client.month_total(4), cells=cells, col=0, set_underline=True, font_size=12,
+                        self.add_paragraph(client.month_total(self._month), cells=cells, col=0, set_underline=True, font_size=12,
                                            space_before=5)
                 else:
                     self.add_paragraph(self._info, cells=cells, col=0, set_underline=True, font_size=10)
@@ -87,7 +87,7 @@ class Word3Cols:
                                            set_underline=True, font_size=12)
 
                     if len(m_months) >= 2:
-                        self.add_paragraph(mid_client.month_total(4), cells=cells, col=1, set_underline=True, font_size=12,
+                        self.add_paragraph(mid_client.month_total(self._month), cells=cells, col=1, set_underline=True, font_size=12,
                                            space_before=5)
                 else:
                     self.add_paragraph(self._info, cells=cells, col=1, set_underline=True, font_size=10)
@@ -116,7 +116,7 @@ class Word3Cols:
                                            set_underline=True, font_size=12)
 
                     if len(r_months) >= 2:
-                        self.add_paragraph(right_client.month_total(4), cells=cells, col=2, set_underline=True, font_size=12,
+                        self.add_paragraph(right_client.month_total(self._month), cells=cells, col=2, set_underline=True, font_size=12,
                                            space_before=5)
                 else:
                     self.add_paragraph(self._info, cells=cells, col=2, set_underline=True, font_size=10)
