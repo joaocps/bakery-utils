@@ -56,7 +56,7 @@ class Word3Cols:
 
                     if len(l_months) <= 2:
                         for month, value in l_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=0, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=0, font_size=12)
                     else:
                         print(l_months)
 
@@ -85,7 +85,7 @@ class Word3Cols:
 
                     if len(m_months) <= 2:
                         for month, value in m_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=1, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=1, font_size=12)
                     else:
                         print(m_months)
 
@@ -114,7 +114,7 @@ class Word3Cols:
 
                     if len(r_months) <= 2:
                         for month, value in r_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=2, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=2, font_size=12)
                     else:
                         print(r_months)
 
