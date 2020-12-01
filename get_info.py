@@ -1,8 +1,6 @@
 import logging
 import pandas as pd
-import re
 
-from wordfile import WordDoc
 
 #Tests
 from wordfile3cols import Word3Cols
