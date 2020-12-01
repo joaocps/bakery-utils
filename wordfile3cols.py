@@ -20,8 +20,15 @@ class Word3Cols:
 
     def create(self):
 
-        """Iterate over all clients"""
-        iterations = iter(self._data)
+        """Process data and remove some clients"""
+        desired_clients = []
+        for x in self._data:
+            _ = x.month_verify(self._month)
+            if len(_) != 0 and self._op == "pay":
+                desired_clients.append(x)
+
+        """Iterate over desire clients"""
+        iterations = iter(desired_clients)
 
         """changing the page margins"""
         sections = self.document.sections
@@ -49,7 +56,7 @@ class Word3Cols:
 
                     if len(l_months) <= 2:
                         for month, value in l_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=0, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=0, font_size=12)
                     else:
                         print(l_months)
 
@@ -78,7 +85,7 @@ class Word3Cols:
 
                     if len(m_months) <= 2:
                         for month, value in m_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=1, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=1, font_size=12)
                     else:
                         print(m_months)
 
@@ -107,7 +114,7 @@ class Word3Cols:
 
                     if len(r_months) <= 2:
                         for month, value in r_months.items():
-                            self.add_paragraph(month + ' - ' + str(value) + '€', cells=cells, col=2, font_size=12)
+                            self.add_paragraph(month + ' - ' + "{:.2f}".format(value) + '€', cells=cells, col=2, font_size=12)
                     else:
                         print(r_months)
 

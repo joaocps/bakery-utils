@@ -12,6 +12,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.popup import Popup, PopupException
 from kivy.uix.label import Label
+from kivy.uix.checkbox import CheckBox
+from kivy.uix.scrollview import ScrollView
 
 import kivy.resources
 from kivy.uix.spinner import Spinner
@@ -88,6 +90,9 @@ class Application(ScreenManager):
         self.s_save_file = Screen(name='Gravar Ficheiro')
         self.add_widget(self.s_save_file)
 
+        # self.s_select_clients = Screen(name='Selecionar Clientes')
+        # self.add_widget(self.s_select_clients)
+
         """Init"""
         self.text_input = TextInput()
         self.text = ""
@@ -130,6 +135,54 @@ class Application(ScreenManager):
 
         self.s_open_file.add_widget(b_main_lay)
 
+    # def select_clients(self, clients):
+    #     # Create Layout for popup
+    #     # try:
+    #     #     self.popup.dismiss()
+    #     # except PopupException:
+    #     #     pass
+    #     # self.current = 'Selecionar Clientes'
+    #     # self.s_open_file.clear_widgets()
+    #     #
+    #     # clients_layout = GridLayout(cols=2)
+    #     # action_layout = BoxLayout(orientation='horizontal', size_hint_y=0.1)
+    #     #
+    #     # select = Button(text='Selecionar')
+    #     # select.bind(on_press=lambda x: self.cancel_callback())
+    #     # cancel = Button(text='Cancelar')
+    #     # cancel.bind(on_press=self.cancel_callback)
+    #     #
+    #     # action_layout.add_widget(select)
+    #     # action_layout.add_widget(cancel)
+    #     #
+    #     # for client in clients:
+    #     #     clients_layout.add_widget(Label(text=client.nome))
+    #     #     clients_layout.active = CheckBox(active=True)
+    #     #     clients_layout.add_widget(clients_layout.active)
+    #     #
+    #     # clients_layout.add_widget(action_layout)
+    #     # self.s_select_clients.add_widget(clients_layout)
+    #
+    #     """Try like a popup"""
+    #     self.current = 'Padaria Central'
+    #     grid = GridLayout(cols=2, padding=10, spacing=20, size_hint=(None, None), size=(500, 500))
+    #     grid.bind(minimum_height=grid.setter('height'))
+    #     dismiss = Button(text='Sair', size_hint=(None, None), size=(50, 30))
+    #     create = Button(text='Ok', size_hint=(None, None), size=(50, 30))
+    #     for client in clients:
+    #         grid.add_widget(Label(text=client.nome))
+    #         grid.active = CheckBox(active=True)
+    #         grid.add_widget(grid.active)
+    #     grid.add_widget(dismiss)
+    #     grid.add_widget(create)
+    #     root = ScrollView(size_hint=(None, None), size=(500, 500),
+    #                       pos_hint={'center_x': .5, 'center_y': .5}, do_scroll_x=False)
+    #     root.add_widget(grid)
+    #     self.popup = Popup(title="Padaria Central", separator_height=0, content=root)
+    #     self.popup.open()
+    #     dismiss.bind(on_press=self.popup.dismiss)
+
+
     def cancel_callback(self, instance):
         self.current = 'Padaria Central'
         self.s_open_file.clear_widgets()
@@ -171,7 +224,7 @@ class Application(ScreenManager):
             try:
                 grid_s = GridLayout(cols=1, rows=4)
                 label = Label(text="Mensagem a enviar para clientes:", size_hint=(.5, .3))
-                self.text_input = TextInput(text="", multiline=True, size_hint =(.5, .8))
+                self.text_input = TextInput(text="", multiline=True, size_hint=(.5, .8))
                 self.text_input.bind(text=self.set_text)
                 confirm = Button(text="Seguinte", size_hint=(.5, .2))
                 cancel = Button(text="Cancelar", size_hint=(.5, .2))
@@ -277,9 +330,19 @@ class Application(ScreenManager):
 
         try:
             if op == 'pay':
-                clients = ExcelInfo(input_file_path[0]).get()
-                Word3Cols(clients, INVERSE_MONTH[month], output_path, "pay", None).create()
-                self.end_action("Ficheiro guardado com sucesso!")
+                try:
+                    clients = ExcelInfo(input_file_path[0]).get()
+                    for x in clients:
+                        print(x)
+                    # """try"""
+                    # self.select_clients(clients)
+                    #
+                    Word3Cols(clients, INVERSE_MONTH[month], output_path, "pay", None).create()
+                except Exception as e:
+                    print(e)
+                    self.end_action("Erro, guarde o ficheiro no formato \n Excel97-2003 (.xls)")
+                else:
+                    self.end_action("Ficheiro guardado com sucesso!")
             else:
                 clients = ExcelInfo(input_file_path[0]).get()
                 Word3Cols(clients, None, output_path, op, infotext).create()
